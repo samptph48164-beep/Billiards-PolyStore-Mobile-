@@ -11,7 +11,7 @@ interface AuthRepository {
         req: ReqLoginUserDTO
     ): ResultWrapper<ResLoginUserDTO>
 
-    /*suspend fun signUpUser(
+    suspend fun signUpUser(
         req: ReqSignUpUserDTO
-    ): ResultWrapper<ResSignUpUserDTO>*/
+    ): ResultWrapper<ResSignUpUserDTO>
 }

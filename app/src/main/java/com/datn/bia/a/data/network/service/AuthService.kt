@@ -15,8 +15,8 @@ interface AuthService {
         @Body req: ReqLoginUserDTO
     ): ResultWrapper<ResLoginUserDTO>
 
-    /*@POST("register")
+    @POST("register")
     suspend fun signUpUser(
         @Body req: ReqSignUpUserDTO
-    ): ResultWrapper<ResSignUpUserDTO>*/
+    ): ResultWrapper<ResSignUpUserDTO>
 }

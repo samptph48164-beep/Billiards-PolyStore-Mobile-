@@ -15,6 +15,6 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun loginUser(req: ReqLoginUserDTO): ResultWrapper<ResLoginUserDTO> =
         authService.loginUser(req)
 
-    /*override suspend fun signUpUser(req: ReqSignUpUserDTO): ResultWrapper<ResSignUpUserDTO> =
-        authService.signUpUser(req)*/
+    override suspend fun signUpUser(req: ReqSignUpUserDTO): ResultWrapper<ResSignUpUserDTO> =
+        authService.signUpUser(req)
 }
