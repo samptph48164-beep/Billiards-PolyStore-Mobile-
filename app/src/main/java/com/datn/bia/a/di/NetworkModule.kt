@@ -59,9 +59,9 @@ object NetworkModule {
         retrofit: Retrofit
     ) = retrofit.create(ProductService::class.java)
 
-    /*@Provides
+    @Provides
     @Singleton
     fun provideCatService(
         retrofit: Retrofit
-    ) = retrofit.create(CatService::class.java)*/
+    ) = retrofit.create(CatService::class.java)
 }

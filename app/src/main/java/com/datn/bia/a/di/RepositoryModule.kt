@@ -30,13 +30,13 @@ abstract class RepositoryModule {
         impl: ProductRepositoryImpl
     ) : ProductRepository
 
-    /*@Singleton
+    @Singleton
     @Binds
     abstract fun bindCatRepository(
         impl: CatRepositoryImpl
     ): CatRepository
 
-    @Singleton
+    /*@Singleton
     @Binds
     abstract fun bindCartRepository(
         impl: CartRepositoryImpl
