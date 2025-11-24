@@ -24,13 +24,13 @@ abstract class RepositoryModule {
         impl: AuthRepositoryImpl
     ): AuthRepository
 
-    /*@Singleton
+    @Singleton
     @Binds
     abstract fun bindProductRepository(
         impl: ProductRepositoryImpl
     ) : ProductRepository
 
-    @Singleton
+    /*@Singleton
     @Binds
     abstract fun bindCatRepository(
         impl: CatRepositoryImpl
