@@ -35,7 +35,7 @@ object NetworkModule {
         retryOnConnectionFailure(true)
     }.build()
 
-    /*@Singleton
+    @Singleton
     @Provides
     fun provideNetworking(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
@@ -59,7 +59,7 @@ object NetworkModule {
         retrofit: Retrofit
     ) = retrofit.create(ProductService::class.java)
 
-    @Provides
+    /*@Provides
     @Singleton
     fun provideCatService(
         retrofit: Retrofit
