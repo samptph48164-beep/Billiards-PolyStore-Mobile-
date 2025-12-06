@@ -7,8 +7,11 @@ import com.datn.bia.a.R
 import com.datn.bia.a.common.AppConst
 import com.datn.bia.a.common.UiState
 import com.datn.bia.a.common.base.BaseFragment
+import com.datn.bia.a.common.base.ext.click
 import com.datn.bia.a.common.base.ext.showToastOnce
+import com.datn.bia.a.data.storage.SharedPrefCommon
 import com.datn.bia.a.databinding.FragmentHomeBinding
+import com.datn.bia.a.present.activity.auth.si.SignInActivity
 import com.datn.bia.a.present.activity.prod.ProductActivity
 import com.datn.bia.a.present.fragment.home.adapter.CatAdapter
 import com.datn.bia.a.present.fragment.home.adapter.ProductAdapter
@@ -36,10 +39,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.rcvCategory.apply {
             catAdapter = CatAdapter(
                 onClick = { index, cat ->
-                    catAdapter?.changeIndexSelect(index)
-                    productAdapter?.submitData(
-                        viewModel.allPro.value.filter { it.category?.id == viewModel.allCat.value[index].id }
-                    )
+                    val index = catAdapter?.changeIndexSelect(index) ?: -1
+                    if (index == -1) {
+                        productAdapter?.submitData(
+                            viewModel.allPro.value
+                        )
+                    } else {
+                        productAdapter?.submitData(
+                            viewModel.allPro.value.filter { it.category?.id == viewModel.allCat.value[index].id }
+                        )
+                    }
                 }
             )
 
@@ -51,12 +60,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 contextParams = requireContext(),
                 onProductClick = { index, product ->
                     gson?.toJson(product)?.let { json ->
-                        startActivity(Intent(
-                            requireContext(),
-                            ProductActivity::class.java
-                        ).apply {
-                            putExtra(AppConst.KEY_PRODUCT_DETAIL, json)
-                        })
+                        startActivity(
+                            Intent(
+                                requireContext(),
+                                ProductActivity::class.java
+                            ).apply {
+                                putExtra(AppConst.KEY_PRODUCT_DETAIL, json)
+                            })
                     } ?: run {
                         requireContext().showToastOnce(getString(R.string.msg_wrong))
                     }
@@ -64,6 +74,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
 
             adapter = productAdapter
+        }
+    }
+
+    override fun clickViews() {
+        super.clickViews()
+
+        binding.icChat.click {
+            onChatEvent()
+        }
+
+        binding.btnSearch.click {
+            onSearchEvent()
+        }
+
+        binding.icNotification.click {
+            onNotificationEvent()
         }
     }
 
@@ -126,5 +152,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         gson = null
 
         super.onDestroy()
+    }
+
+    private fun onChatEvent() {
+        if (SharedPrefCommon.jsonAcc.isEmpty()) {
+            startActivity(Intent(requireContext(), SignInActivity::class.java))
+            return
+        }
+    }
+
+    private fun onSearchEvent() {
+        if (SharedPrefCommon.jsonAcc.isEmpty()) {
+            startActivity(Intent(requireContext(), SignInActivity::class.java))
+            return
+        }
+    }
+
+    private fun onNotificationEvent() {
+
     }
 }

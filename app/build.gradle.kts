@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.datn.bia.a"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -107,7 +107,9 @@ dependencies {
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.sandwich)
     implementation(libs.sandwich.retrofit)
+    implementation(libs.commons.codec)
     // Unit
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
+    implementation(files("libs/zalo_pay.aar"))
 }

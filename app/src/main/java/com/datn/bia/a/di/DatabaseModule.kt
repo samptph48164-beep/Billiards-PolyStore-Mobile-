@@ -21,4 +21,12 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideCartDao(db: AppDatabase) = db.cartDao()
+
+    @Singleton
+    @Provides
+    fun provideFavoriteDao(db: AppDatabase) = db.favoriteDao()
+
+    @Singleton
+    @Provides
+    fun provideCommentDao(db: AppDatabase) = db.commentDao()
 }

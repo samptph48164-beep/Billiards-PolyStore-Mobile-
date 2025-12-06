@@ -4,7 +4,10 @@ import com.datn.bia.a.BuildConfig
 import com.datn.bia.a.data.network.factory.ResultWrapperCallAdapterFactory
 import com.datn.bia.a.data.network.service.AuthService
 import com.datn.bia.a.data.network.service.CatService
+import com.datn.bia.a.data.network.service.CommentService
+import com.datn.bia.a.data.network.service.OrderService
 import com.datn.bia.a.data.network.service.ProductService
+import com.datn.bia.a.data.network.service.VoucherService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -64,4 +67,22 @@ object NetworkModule {
     fun provideCatService(
         retrofit: Retrofit
     ) = retrofit.create(CatService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideVoucherService(
+        retrofit: Retrofit
+    ) = retrofit.create(VoucherService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideOrderService(
+        retrofit: Retrofit
+    ) = retrofit.create(OrderService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCommentService(
+        retrofit: Retrofit
+    ) = retrofit.create(CommentService::class.java)
 }
