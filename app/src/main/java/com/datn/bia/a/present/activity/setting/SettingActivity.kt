@@ -1,5 +1,6 @@
 package com.datn.bia.a.present.activity.setting
 
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.datn.bia.a.R
@@ -11,6 +12,7 @@ import com.datn.bia.a.data.storage.SharedPrefCommon
 import com.datn.bia.a.databinding.ActivitySettingBinding
 import com.datn.bia.a.domain.model.domain.SettingCat
 import com.datn.bia.a.domain.model.dto.res.ResLoginUserDTO
+import com.datn.bia.a.present.activity.home.MainActivity
 import com.datn.bia.a.present.activity.setting.adapter.SettingCatAdapter
 import com.datn.bia.a.present.dialog.LoadingDialog
 import com.datn.bia.a.present.dialog.UpdateDialog
@@ -73,6 +75,12 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         binding.icChat.click {
 
         }
+
+        binding.btnLogOut.click {
+            SharedPrefCommon.jsonAcc = ""
+            startActivity(Intent(this@SettingActivity, MainActivity::class.java))
+            finishAffinity()
+        }
     }
 
     override fun observerData() {
@@ -97,14 +105,17 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     is UiState.Success<*> -> {
                         Gson().fromJson(SharedPrefCommon.jsonAcc, ResLoginUserDTO::class.java)
                             ?.let {
-                                val newUser = it.user?.copy(
-                                    phone = cachePhoneNumber
+                                val newRes = it.copy(
+                                    user = it.user?.copy(
+                                        phone = cachePhoneNumber
+                                    )
                                 )
 
-                                SharedPrefCommon.jsonAcc = Gson().toJson(newUser)
+                                SharedPrefCommon.jsonAcc = Gson().toJson(newRes)
                             }
 
                         showToastOnce(getString(R.string.update_success))
+                        loadingDialog?.cancel()
 
                         viewModel.changeStateToIdle()
                     }
@@ -131,14 +142,17 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
                     is UiState.Success<*> -> {
                         Gson().fromJson(SharedPrefCommon.jsonAcc, ResLoginUserDTO::class.java)
                             ?.let {
-                                val newUser = it.user?.copy(
-                                    address = cacheAddress
+                                val newRes = it.copy(
+                                    user = it.user?.copy(
+                                        address = cacheAddress
+                                    )
                                 )
 
-                                SharedPrefCommon.jsonAcc = Gson().toJson(newUser)
+                                SharedPrefCommon.jsonAcc = Gson().toJson(newRes)
                             }
 
                         showToastOnce(getString(R.string.update_success))
+                        loadingDialog?.cancel()
 
                         viewModel.changeStateAddressToIdle()
                     }
@@ -158,12 +172,14 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         settingCatAdapter = SettingCatAdapter(
             contextParams = this@SettingActivity,
             onSettingItem = { index, setting ->
-                when (index) {
+                when (setting.id) {
                     0 -> {
 
                     }
 
-                    1 -> updatePhoneDialog?.show()
+                    1 -> updateAddressDialog?.show()
+
+                    2 -> updatePhoneDialog?.show()
                 }
             }
         ).apply {
