@@ -27,6 +27,7 @@ import com.datn.bia.a.domain.model.dto.res.ResLoginUserDTO
 import com.datn.bia.a.present.activity.order.history.OrderActivity
 import com.datn.bia.a.present.dialog.LoadingDialog
 import com.datn.bia.a.present.dialog.MessageDialog
+import com.datn.bia.a.present.dialog.NotificationDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +45,7 @@ class ConfirmOrderActivity : BaseActivity<ActivityConfirmOrderBinding>() {
     private var cartConfirmAdapter: CartConfirmAdapter? = null
     private var messageDialog: MessageDialog? = null
     private var loadingDialog: LoadingDialog? = null
+    private var notificationDialog: NotificationDialog? = null
 
     private var paymentMethod = MethodPayment.CASH_ON_DELIVERY.name
 
@@ -76,6 +78,13 @@ class ConfirmOrderActivity : BaseActivity<ActivityConfirmOrderBinding>() {
             }
         )
         loadingDialog = LoadingDialog(this)
+        notificationDialog = NotificationDialog(
+            context = this,
+            onOk = {
+                startActivity(Intent(this@ConfirmOrderActivity, OrderActivity::class.java))
+                finish()
+            }
+        )
         setData()
     }
 
@@ -109,6 +118,7 @@ class ConfirmOrderActivity : BaseActivity<ActivityConfirmOrderBinding>() {
                 when (uiState) {
                     is UiState.Error -> {
                         showToastOnce(uiState.message)
+                        loadingDialog?.cancel()
                         viewModel.changeStateToIdle()
                     }
 
@@ -121,8 +131,9 @@ class ConfirmOrderActivity : BaseActivity<ActivityConfirmOrderBinding>() {
                     }
 
                     is UiState.Success<*> -> {
-                        startActivity(Intent(this@ConfirmOrderActivity, OrderActivity::class.java))
-                        finish()
+                        loadingDialog?.cancel()
+
+                        notificationDialog?.show()
                     }
                 }
             }
@@ -157,7 +168,7 @@ class ConfirmOrderActivity : BaseActivity<ActivityConfirmOrderBinding>() {
         if (paymentMethod == MethodPayment.CASH_ON_DELIVERY.name) {
             viewModel.checkOutOrder(
                 totalPrice = intent.getIntExtra(AppConst.KEY_TOTAL_PRICE, 0),
-                voucherId = intent.getStringExtra(AppConst.KEY_ID_VOUCHER) ?: "",
+                voucherId = intent.getStringExtra(AppConst.KEY_ID_VOUCHER),
                 listProduct = gson?.fromJson<List<ReqProdCheckOut>>(
                     intent.getStringExtra(AppConst.KEY_LIST_PRODUCT),
                     object : TypeToken<List<ReqProdCheckOut>>() {}.type
