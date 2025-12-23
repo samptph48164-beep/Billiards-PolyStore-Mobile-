@@ -1,13 +1,16 @@
 package com.datn.bia.a.present.activity.setting
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.datn.bia.a.R
 import com.datn.bia.a.common.UiState
 import com.datn.bia.a.common.base.BaseActivity
 import com.datn.bia.a.common.base.ext.click
+import com.datn.bia.a.common.base.ext.goneView
 import com.datn.bia.a.common.base.ext.showToastOnce
+import com.datn.bia.a.common.base.ext.visibleView
 import com.datn.bia.a.data.storage.SharedPrefCommon
 import com.datn.bia.a.databinding.ActivitySettingBinding
 import com.datn.bia.a.domain.model.domain.SettingCat
@@ -36,6 +39,14 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     override fun initViews() {
         super.initViews()
+
+        if (SharedPrefCommon.jsonAcc.isEmpty()) {
+            binding.btnLogOut.goneView()
+        } else {
+            binding.btnLogOut.visibleView()
+        }
+
+        Log.d("duylt", "Json: ${SharedPrefCommon.jsonAcc}")
 
         initRcvSetting()
         updatePhoneDialog = UpdateDialog(
@@ -78,7 +89,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
         binding.btnLogOut.click {
             SharedPrefCommon.jsonAcc = ""
-            startActivity(Intent(this@SettingActivity, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finishAffinity()
         }
     }
