@@ -4,7 +4,7 @@ data class ResOrderDTO(
     val _id: String? = null,
     val madh: Int? = null,
     val customerName: String? = null,
-    val totalPrice: Int? = null,
+    val totalPrice: Double? = null,
     val phone: String? = null,
     val address: String? = null,
     val products: List<OrderProduct>? = null,
@@ -17,21 +17,21 @@ data class ResOrderDTO(
     val createdAt: String? = null,
     val updatedAt: String? = null,
     val __v: Int? = null
-) {
-}
+)
 
 data class OrderProduct(
     val productId: OrderProductDetail? = null,
     val quantity: Int? = null,
-    val priceBeforeDis: Int? = null,
-    val priceAfterDis: Int? = null,
+    val priceBeforeDis: Double? = null,
+    val priceAfterDis: Double? = null,
     val name: String? = null,
-    val _id: String? = null
+    val _id: String? = null,
+    val color: String? = null,
 )
 
 data class OrderProductDetail(
     val _id: String? = null,
     val name: String? = null,
-    val price: Int? = null,
+    val price: Double? = null,
     val imageUrl: String? = null
 )

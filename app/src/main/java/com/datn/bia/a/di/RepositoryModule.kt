@@ -1,8 +1,12 @@
 package com.datn.bia.a.di
 
 import com.datn.bia.a.data.database.repository.CartRepositoryImpl
+import com.datn.bia.a.data.database.repository.CategoryCacheRepositoryImpl
 import com.datn.bia.a.data.database.repository.CommentCacheRepositoryImpl
 import com.datn.bia.a.data.database.repository.FavoriteRepositoryImpl
+import com.datn.bia.a.data.database.repository.FeedbackRepositoryImpl
+import com.datn.bia.a.data.database.repository.OrderCacheRepositoryImpl
+import com.datn.bia.a.data.database.repository.ProductCacheRepositoryImpl
 import com.datn.bia.a.data.network.repository.AuthRepositoryImpl
 import com.datn.bia.a.data.network.repository.CatRepositoryImpl
 import com.datn.bia.a.data.network.repository.CommentRepositoryImpl
@@ -12,10 +16,14 @@ import com.datn.bia.a.data.network.repository.VoucherRepositoryImpl
 import com.datn.bia.a.domain.repository.AuthRepository
 import com.datn.bia.a.domain.repository.CartRepository
 import com.datn.bia.a.domain.repository.CatRepository
+import com.datn.bia.a.domain.repository.CategoryCacheRepository
 import com.datn.bia.a.domain.repository.CommentCacheRepository
 import com.datn.bia.a.domain.repository.CommentRepository
 import com.datn.bia.a.domain.repository.FavoriteRepository
+import com.datn.bia.a.domain.repository.FeedbackRepository
+import com.datn.bia.a.domain.repository.OrderCacheRepository
 import com.datn.bia.a.domain.repository.OrderRepository
+import com.datn.bia.a.domain.repository.ProductCacheRepository
 import com.datn.bia.a.domain.repository.ProductRepository
 import com.datn.bia.a.domain.repository.VoucherRepository
 import dagger.Binds
@@ -81,4 +89,29 @@ abstract class RepositoryModule {
     abstract fun bindCommentRepository(
         impl: CommentRepositoryImpl
     ): CommentRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindProductCacheRepository(
+        impl: ProductCacheRepositoryImpl
+    ): ProductCacheRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindCategoryCacheRepository(
+        impl: CategoryCacheRepositoryImpl
+    ): CategoryCacheRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindFeedbackRepository(
+        impl: FeedbackRepositoryImpl
+    ): FeedbackRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindOrderCacheRepository(
+        impl: OrderCacheRepositoryImpl
+    ): OrderCacheRepository
+
 }
