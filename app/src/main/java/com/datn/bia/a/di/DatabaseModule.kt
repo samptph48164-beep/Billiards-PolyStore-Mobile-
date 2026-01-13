@@ -29,4 +29,20 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideCommentDao(db: AppDatabase) = db.commentDao()
+
+    @Singleton
+    @Provides
+    fun provideProductDao(db: AppDatabase) = db.productDao()
+
+    @Singleton
+    @Provides
+    fun provideCategoryDao(db: AppDatabase) = db.categoryDao()
+
+    @Singleton
+    @Provides
+    fun provideFeedbackDao(db: AppDatabase) = db.feedbackDao()
+
+    @Singleton
+    @Provides
+    fun provideOrderCacheDao(db: AppDatabase) = db.orderDao()
 }
