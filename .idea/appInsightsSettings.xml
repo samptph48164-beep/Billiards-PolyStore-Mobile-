@@ -22,7 +22,7 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.datn.bia.a" />
+                  <option name="appId" value="com.datn.vpp.sp26" />
                   <option name="mobileSdkAppId" value="1:979246730252:android:96c159f848056554b43229" />
                   <option name="projectId" value="duylt-app-default" />
                   <option name="projectNumber" value="979246730252" />
