@@ -30,7 +30,8 @@ class SignUpViewModel @Inject constructor(
         _emailValue,
         _passwordValue,
         _confirmPasswordValue
-    ) { state, username, email, password, confirmPass ->
+    )
+    { state, username, email, password, confirmPass ->
         state.copy(
             username = username,
             email = email,
