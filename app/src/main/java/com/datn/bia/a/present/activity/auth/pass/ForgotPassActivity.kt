@@ -90,4 +90,5 @@ class ForgotPassActivity : BaseActivity<ActivityForgotpassBinding>() {
 
         super.onDestroy()
     }
+    //
 }
