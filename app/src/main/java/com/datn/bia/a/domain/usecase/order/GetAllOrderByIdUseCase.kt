@@ -44,29 +44,23 @@ class GetAllOrderByIdUseCase @Inject constructor(
                 when (val response = orderRepository.getOrdersByUser(id)) {
                     is ResultWrapper.Success -> {
                         val list = orderCacheRepository.getAllCacheOrder().firstOrNull() ?: emptyList()
-                        Log.d("duylt", "Check List: ${list.size}\n${orderCacheRepository.getAllCacheOrder().asLiveData().value == null}")
+                        Log.d("sampt", "Check List: ${list.size}\n${orderCacheRepository.getAllCacheOrder().asLiveData().value == null}")
                         val listTemp = list.toListResOrderDTO()
                             .filter { it.status == AppConst.STATUS_ORDER_TO_RECEIVE }
                         val data = response.value.toListOrderEntity()
-
-                        Log.d("duylt", "Size: ${listTemp.size}\n${data.filter { it.userId == id }.filter { it.status == AppConst.STATUS_ORDER_TO_RECEIVE }.size}")
-
+                        Log.d("sampt", "Size: ${listTemp.size}\n${data.filter { it.userId == id }.filter { it.status == AppConst.STATUS_ORDER_TO_RECEIVE }.size}")
                         if (listTemp.size < data.filter { it.userId == id }.filter { it.status == AppConst.STATUS_ORDER_TO_RECEIVE }.size) { // có đơn hàng xác nhận mới  -> push noti
                             createChannel(context)
                             showNotification(context)
                         }
-
                         clearAllOrderCacheUseCase.invoke().collect {
                             cacheListOrderUseCase.invoke(data).collect {}
                         }
-
                         emit(UiState.Success(response.value))
                     }
-
                     is ResultWrapper.GenericError -> emit(UiState.Error(response.message?.ifEmpty {
                         context.getString(R.string.msg_wrong)
                     } ?: "Unknow Error"))
-
                     is ResultWrapper.NetworkError -> emit(UiState.Error("Network Error"))
                 }
             } catch (e: HttpException) {
@@ -74,7 +68,6 @@ class GetAllOrderByIdUseCase @Inject constructor(
             } catch (e: Exception) {
                 emit(UiState.Error(e.message ?: "Unknow Error"))
             }
-
             delay(5_000)
         }
     }.flowOn(Dispatchers.IO)
